@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load static %}
-
+{% load mathfilters %}
 {% block title %}صفحه اصلی {% endblock %}
 
 {% block content %}
@@ -20,15 +20,21 @@
                         </svg>
                     </span>
                     <div class="info-box-content">
+                        {% for category in categories %}
+                        {% if category.name == 'info' %}
                         <span class="info-box-text">تالیفی</span>
-                        <span class="info-box-number">10</span>
+                        <span class="info-box-number">{{ category.total_post }}</span>
 
                         <div class="progress">
-                            <div class="progress-bar" style="width: {{ category.total_post }}"></div>
+                            <div class="progress-bar"
+                                style="width: {{ category.total_post|mul:100|div:page_obj.paginator.count|floatformat:"0" }}%">
+                            </div>
                         </div>
                         <span class="progress-description">
-                            30% از پست ها
+                            {{ category.total_post|mul:100|div:page_obj.paginator.count|floatformat:"0" }}% از پست ها
                         </span>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -48,16 +54,21 @@
                     </span>
 
                     <div class="info-box-content">
+                        {% for category in categories %}
+                        {% if category.name == 'success' %}
                         <span class="info-box-text">ترجمه ای</span>
-                        <span class="info-box-number">5</span>
+                        <span class="info-box-number">{{ category.total_post }}</span>
 
                         <div class="progress">
-                            <div class="progress-bar" style="width: {{ category.total_post }}%">
+                            <div class="progress-bar"
+                                style="width: {{ category.total_post|mul:100|div:page_obj.paginator.count|floatformat:"0" }}%">
                             </div>
                         </div>
                         <span class="progress-description">
-                            20% از پست ها
+                            {{ category.total_post|mul:100|div:page_obj.paginator.count|floatformat:"0" }}% از پست ها
                         </span>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -75,16 +86,21 @@
                     </span>
 
                     <div class="info-box-content">
+                        {% for category in categories %}
+                        {% if category.name == 'warning' %}
                         <span class="info-box-text">کاربران</span>
-                        <span class="info-box-number">5</span>
+                        <span class="info-box-number">{{ category.total_post }}</span>
 
                         <div class="progress">
-                            <div class="progress-bar" style="width: {{ category.total_post}}">
+                            <div class="progress-bar"
+                                style="width: {{ category.total_post|mul:100|div:page_obj.paginator.count|floatformat:"0" }}%">
                             </div>
                         </div>
                         <span class="progress-description">
-                            50% از پست ها
+                            {{ category.total_post|mul:100|div:page_obj.paginator.count|floatformat:"0" }}% از پست ها
                         </span>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -173,8 +189,14 @@
                     <div class="card-body">
                         <div class="ribbon-wrapper">
                             <a href="#">
-                                <div class="ribbon bg-info">
+                                <div class="ribbon bg-{{ post.category.name }}">
+                                    {% if post.category.name == 'info' %}
                                     تالیفی
+                                    {% elif post.category.name == 'success' %}
+                                    ترجمه ای
+                                    {% elif post.category.name == 'warning' %}
+                                    کاربران
+                                    {% endif %}
                                 </div>
                             </a>
                         </div>
@@ -183,9 +205,9 @@
                             style="display: block; margin-top: 10px; font-weight: 700;">{{ post.title }}</a>
                         <p>{{ post.brief }}</p>
 
-                        <span class="float-right text-muted">5 لایک - 5
+                        <span class="float-right text-muted">{{ post.likes.count }} لایک - {{ post.comments.count }}
                             نظر</span>
-                        <span class="float-left text-muted">زمان مطالعه : 2 دقیقه</span>
+                        <span class="float-left text-muted">زمان مطالعه : {{ post.read_time|time:'i' }} دقیقه</span>
                     </div>
                     <!-- /.card-body -->
                     {% if user.is_authenticated %}

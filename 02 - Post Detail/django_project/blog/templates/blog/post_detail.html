@@ -1,5 +1,5 @@
 {% extends 'blog/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block title %} {{ post.title }}{% endblock %}
 
 {% block header %}
@@ -12,10 +12,10 @@
       </div>
       <div class="card-tools">
         {% if is_read %}
-        <a href="#" class="btn btn-tool" data-toggle="tooltip" title="خوانده شده">
+        <a href="{% url 'post-read' post.id %}" class="btn btn-tool" data-toggle="tooltip" title="خوانده شده">
           <i style="font-size: 30px; color:green" class="far fa-check-circle"></i></a>
         {% else %}
-        <a href="#" class="btn btn-tool" data-toggle="tooltip" title="خوانده شده">
+        <a href="{% url 'post-read' post.id %}" class="btn btn-tool" data-toggle="tooltip" title="خوانده شده">
           <i style="font-size: 30px;" class="far fa-circle"></i></a>
         {% endif %}
       </div>
@@ -51,7 +51,7 @@
                 <div class="description-block">
                   <h5 class="description-header">{{ post.likes.count }}</h5>
                   {% if is_like %}
-                  <a href="@">
+                  <a href="{% url 'post-like' post.id %}">
                     <svg class="bi bi-heart-fill" style="color: red;" width="1em" height="1em" viewBox="0 0 16 16"
                       fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd"
@@ -59,7 +59,7 @@
                     </svg>
                   </a>
                   {% else %}
-                  <a href="#">
+                  <a href="{% url 'post-like' post.id %}">
                     <span class="description-text">
                       <svg class="bi bi-heart" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
@@ -167,7 +167,8 @@
               <span class="text-muted float-left">{{ comment.date_created }}</span>
               {% if comment.author == user %}
               <div style="text-align: left;">
-                <a href="#" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal-default">
+                <a href="#" class="btn btn-outline-danger btn-sm" data-toggle="modal"
+                  data-target="#modal-default{{comment.id}}">
                   <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -183,7 +184,7 @@
           </div>
           <!-- /.comment-text -->
         </div>
-        <div class="modal fade" id="modal-default">
+        <div class="modal fade" id="modal-default{{comment.id}}">
           <div class="modal-dialog">
             <div class="modal-content">
               <form method="POST" action="{% url 'comment-delete' comment.id %}">{% csrf_token %}
@@ -215,14 +216,14 @@
         {% if user.is_authenticated %}
         <form method="POST">
           {% csrf_token %}
-          {{ form.as_p }}
+          {{ form|crispy }}
           <div class="offset-sm-2 col-sm-3">
             <button class="btn btn-block btn-secondary btn-lg">ارسال</button>
           </div>
         </form>
         {% else %}
         <small class="text-muted">
-          برای ارسال نظر لطفا <a class="btn btn-outline-primary btn-xs" href="#">وارد</a> حساب کاریری شوید
+          برای ارسال نظر لطفا <a class="btn btn-outline-primary btn-xs" href="#">وارد</a> حساب کاربری شوید
         </small>
         {% endif %}
       </div>
