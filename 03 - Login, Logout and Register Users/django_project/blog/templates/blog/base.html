@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html dir="rtl">
+
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% block title %}{% endblock title %}</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'blog/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{% static 'blog/plugins/toastr/toastr.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'blog/dist/css/adminlte.min.css' %}">
+  <!-- <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css" integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="{% static 'blog/custom.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition sidebar-mini layout-navbar">
+  <!-- Site wrapper -->
+  <div class="container">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand-md navbar-primary navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <!-- <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li> -->
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="{% url 'blog-home' %}" class="nav-link">صفحه اصلی</a>
+        </li>
+        <!-- <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">نقدها</a>
+      </li> -->
+      </ul>
+      <!-- SEARCH FORM -->
+      <form class="form-inline ml-3" method="GET" action="#">
+        <div class="input-group input-group-sm">
+          <input class="form-control form-control-navbar" type="text" name="q" value="{{ request.GET.q }}"
+            placeholder="جستجو" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-navbar" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav">
+        <li class="nav-item d-none d-sm-inline-block custom">
+          <a href="#" class="nav-link">پروفایل
+            <!-- <svg class="bi bi-person-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
+            <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+          </svg> پروفایل -->
+          </a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block custom">
+          <a href="{% url 'logout' %}" class="nav-link"> خروج از حساب کاربری
+            <!-- <svg class="bi bi-x-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z"/>
+          </svg> خروج -->
+          </a>
+        </li>
+      </ul>
+      {% else %}
+      <ul class="navbar-nav">
+        <li class="nav-item d-none d-sm-inline-block custom">
+          <a class="btn btn-app" href="{% url 'login' %}"> ورود
+          </a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block custom">
+          <a class="btn btn-app" href="#"> ثبت نام</a>
+        </li>
+      </ul>
+      {% endif %}
+    </nav>
+    <div class="content-wrapper">
+      {% block header %}
+      {% endblock header %}
+
+      {% block content %}
+      {% endblock content %}
+    </div>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="{% static 'blog/plugins/jquery/jquery.min.js' %}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{% static 'blog/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- SweetAlert2 -->
+  <script src="{% static 'blog/plugins/sweetalert2/sweetalert2.min.js' %}"></script>
+  <!-- Toastr -->
+  <script src="{% static 'blog/plugins/toastr/toastr.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'blog/dist/js/adminlte.min.js' %}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{% static 'blog/dist/js/demo.js' %}"></script>
+  <script src="{% static 'blog/dist/js/pages/custom.js' %}"></script>
+  {% block script %}{% endblock %}
+</body>
+
+</html>

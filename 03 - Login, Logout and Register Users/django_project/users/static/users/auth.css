@@ -1,0 +1,12 @@
+.alert-info {
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.alert-success {
+    text-align: right;
+    /* max-width: max-content; */
+    width: 100%;
+    direction: rtl;
+}
+

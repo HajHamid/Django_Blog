@@ -1,0 +1,30 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}ورود{% endblock %}
+{% block form %}
+<div class="card-body register-card-body">
+  <p class="login-box-msg">وارد شوید</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="row">
+      <div class="col-4">
+        <button type="submit" class="btn btn-primary btn-block">ورود</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="social-auth-links text-center">
+    <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-danger">
+      <i class="fab fa-google"></i>
+      ورود با حساب گوگل
+    </a>
+  </div>
+  <p class="mb-1">
+    <a class="btn btn-default" href="#">فراموشی رمز عبور</a>
+  </p>
+  <p class="mb-0">
+    <a class="btn btn-default" href="#" class="text-center">ثبت نام</a>
+  </p>
+</div>
+{% endblock %}
