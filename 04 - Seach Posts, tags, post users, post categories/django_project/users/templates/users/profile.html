@@ -1,0 +1,101 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block header %}
+<section class="content-header">
+    <div class="container-fluid">
+        <h4>پروفایل</h4>
+    </div>
+</section>
+{% endblock header %}
+
+{% block content %}
+<!-- Main content -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle" src="{{ user.profile.image.url }}"
+                                alt="User profile picture" id="uploadPreview">
+                        </div>
+
+                        <h3 class="profile-username text-center">{{ user.get_full_name }}</h3>
+
+                        <p class="text-muted text-center">Software Engineer</p>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#activity"
+                                    data-toggle="tab">تنظیمات</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">تنظیمات</a>
+                            </li> -->
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+
+                            <!-- /.tab-pane -->
+
+                            <!-- /.tab-pane -->
+
+                            <div class="tab-pane active" id="activity">
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ u_form|crispy }}
+                                    <h5>تغییر عکس</h5>
+                                    <div class="form-group">
+                                        {% for field in p_form %}
+                                        <div class="custom-file">
+                                            <input type="file" name="{{ field.name }}" class="custom-file-input"
+                                                id="id_{{ field.name }}">
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div>
+                                        <div class="offset-sm-2 mb-3">
+                                            <a href="{% url 'password_change' %}" type="submit"
+                                                class="btn btn-outline-secondary">تغییر رمز
+                                                عبور</a>
+                                        </div>
+                                        <div class="offset-sm-2 col-sm-10">
+                                            <button type="submit" class="btn btn-danger"> بروزرسانی اطلاعات</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+{% endblock %}

@@ -1,0 +1,329 @@
+/* Base */
+@font-face {
+    font-family: Vazir;
+    src: url('font/Vazir.ttf');
+}
+@font-face {
+    font-family: Vazir-Thin;
+    src: url('font/Vazir-Thin.ttf');
+}
+@font-face {
+    font-family: Vazir-Medium;
+    src: url('font/Vazir-Medium.ttf');
+}
+@font-face {
+    font-family: Vazir-Light;
+    src: url('font/Vazir-Light.ttf');
+}
+@font-face {
+    font-family: Vazir-Bold;
+    src: url('font/Vazir-Bold.ttf');
+}
+@font-face {
+    font-family: Vazir-Black;
+    src: url('font/Vazir-Black.ttf');
+}
+
+@font-face {
+    font-family: Vazir-num;
+    src: url('font/Farsi-Digits/Vazir-FD.ttf');
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: Vazir-num;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    /* font-family: IranSansWeb; */
+    color: white;
+}
+
+.navbar-primary{
+    background-color: #107abe;
+}
+
+body:not(.sidebar-mini-md) .content-wrapper, body:not(.sidebar-mini-md) .main-footer, body:not(.sidebar-mini-md) .main-header {
+    transition: margin-left .3s ease-in-out;
+    margin-left: 0px;
+    max-width: 1000px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1rem;
+}
+
+.navbar-nav{
+    padding-right: 0;
+    padding-left: unset;
+}
+
+.container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    text-align: right;
+}
+
+.form-control:not(:last-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group > .input-group-append > .btn{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+}
+
+.card-header > .card-tools {
+    float: left;
+    margin-left: -.625rem;
+}
+
+.user-block {
+    float: right;
+}
+
+.user-block img {
+    float: right;
+}
+
+.img-circle{
+    object-fit: cover;
+}
+
+.user-block .comment, .user-block .description, .user-block .username {
+    margin-right: 50px;
+}
+
+.user-block .username {
+    font-weight: unset;
+}
+
+.custom{
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.btn-app {
+    height: 33px;
+    margin: 0;
+    padding: 5px 5px;
+}
+svg{
+    font-size: 20px;
+}
+
+
+.btn-app > .fa, 
+.btn-app > .fab, .btn-app > .far, .btn-app > .fas, .btn-app > .glyphicon, .btn-app > .ion {
+    font-size: 17px;
+}
+
+
+.profile-user-img {
+    height: 100px;
+    object-fit: cover;
+}
+
+
+.mb-3, .my-3 {
+    direction: ltr;
+}
+
+.offset-sm-2{
+    padding-right: 0;
+}
+
+.alert-success {
+    text-align: right;
+    /* max-width: max-content; */
+    width: 100%;
+    direction: rtl;
+}
+
+.custom-file {
+    text-align: left;
+}
+
+.btn-default{
+    float: left;
+    margin-left: 5px;
+}
+
+.card{
+    text-align: right;
+}
+
+.widget-user-header{
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+.widget-user .widget-user-header {
+    border-radius: unset;
+}
+
+.card-title {
+    float: right;
+}
+
+.card-body{
+    position: relative;
+}
+
+.ribbon-wrapper {
+	height: 70px;
+	overflow: hidden;
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	width: 65px;
+	z-index: 10;
+}
+
+.ribbon-wrapper .ribbon {
+	box-shadow: 0 0 3px rgba(0,0,0,.3);
+	font-size: .8rem;
+	line-height: 100%;
+	padding: .375rem 0;
+	position: relative;
+	right: -25px;
+	text-align: center;
+	text-shadow: 0 -1px 0 rgba(0,0,0,.4);
+	text-transform: uppercase;
+	top: 11px;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+	width: 90px;
+}
+.card-body .text-center .img-fluid{
+    height: 100px;
+    width: 100px;
+}
+
+.card-body .img-fluid{
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.info-box .info-box-content {
+    text-align: right;
+}
+
+.widget-user .widget-user-image{
+    top: 380px;
+}
+
+.widget-user .widget-user-header{
+    height: 435px;
+}
+
+.widget-user .widget-user-image > img{
+    height: 90px;
+    object-fit: cover;
+}
+blockquote{
+    border-right: .7rem solid #007bff;
+    border-left: none;
+}
+
+.card-comments .card-comment img {
+    float: right;
+    height: 2.875rem;
+    width: 2.875rem;
+}
+
+.card-comments .comment-text {
+    margin-right: 50px;
+    margin-left: 0;
+}
+
+.img-lg, .img-md, .img-sm {
+    float: right;
+}
+
+.img-sm + .img-push {
+    margin-right: 2.5rem;
+    margin-left: 0;
+}
+
+textarea.form-control {
+    height: 45px;
+}
+
+.modal.show .modal-dialog {
+    text-align: right;
+}
+
+.attachment-block .attachment-img {
+    float: right;
+    height: 100px;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+.attachment-block .attachment-pushed {
+    margin-right: 110px;
+    margin-left: 0;
+    text-align: right;
+}
+
+.dropdown-item {
+    text-align: right;
+    padding: .5rem 1rem;
+}
+.copy_input{
+    margin-left: 10px;
+    cursor: unset;
+    background: #cccc;
+    border: none;
+    padding: 5px;
+}
+
+.toast-message{
+    text-align: right;
+}
+
+.attachment-block h4{
+font-size: 1.2rem;
+}
+
+.carousel-inner{
+    height: 400px;
+}
+
+.carousel-item {
+    height: 400px;
+}
+
+.attachment-text{
+    padding-top: 10px;
+}
+
+.attachment-block{
+    padding: 0;
+    background: none;
+    border: none;
+    margin-bottom: 0;
+}
+
+.card-success .card-body{
+    padding: .5rem;
+}
+
+.card-info .card-body{
+    padding: .5rem;
+}
+
+.card-warning .card-body{
+    padding: .5rem;
+}
+
+.carousel-caption {
+    direction: rtl;
+}

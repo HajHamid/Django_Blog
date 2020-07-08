@@ -1,0 +1,10 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block title %}خروج{% endblock %}
+{% block form %}
+<div class="card-body register-card-body">
+  <p class="login-box-msg">از حساب کاربری خارج شدید</p>
+    <a class="btn btn-primary" style="display: block;" href="{% url 'login' %}">ورود به حساب کاربری</a>
+    <a class="btn btn-default mt-2" href="{% url 'blog-home' %}">صفحه اصلی</a>
+</div>
+  {% endblock %}
