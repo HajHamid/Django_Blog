@@ -1,5 +1,8 @@
 {% extends 'blog/base.html' %}
+
 {% load crispy_forms_tags %}
+{% load jalali_tags %}
+
 {% block title %} {{ post.title }}{% endblock %}
 
 {% block header %}
@@ -144,7 +147,7 @@
       {% lorem 3 p %}
       <span>تگ ها</span>
       {% for tag in post.tags.all %}
-      <a class="btn btn-outline-secondary btn-sm" href="#">{{ tag }}</a>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url 'tag-post' tag.name %}">{{ tag }}</a>
       {% endfor %}
     </div>
     <!-- /.card-body -->
@@ -164,7 +167,7 @@
           <div class="comment-text">
             <span class="username">
               {{ comment.author.username }}
-              <span class="text-muted float-left">{{ comment.date_created }}</span>
+              <span class="text-muted float-left">{{ comment.date_created|to_jalali:'%y/%m/%d' }}</span>
               {% if comment.author == user %}
               <div style="text-align: left;">
                 <a href="#" class="btn btn-outline-danger btn-sm" data-toggle="modal"
@@ -223,7 +226,8 @@
         </form>
         {% else %}
         <small class="text-muted">
-          برای ارسال نظر لطفا <a class="btn btn-outline-primary btn-xs" href="#">وارد</a> حساب کاربری شوید
+          برای ارسال نظر لطفا <a class="btn btn-outline-primary btn-xs" href="{% url 'login' %}">وارد</a> حساب کاربری
+          شوید
         </small>
         {% endif %}
       </div>

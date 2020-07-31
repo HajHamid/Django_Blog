@@ -12,5 +12,14 @@ urlpatterns = [
         views.CommentDeleteView.as_view(),
         name="comment-delete",
     ),
+    path("search/", views.search_post, name="search-post"),
+    path(
+        "search/users/<str:username>/",
+        views.UserPostListView.as_view(),
+        name="user-post",
+    ),
+    path(
+        "search/tags/<str:tag_name>/", views.TagPostListView.as_view(), name="tag-post"
+    ),
 ]
 

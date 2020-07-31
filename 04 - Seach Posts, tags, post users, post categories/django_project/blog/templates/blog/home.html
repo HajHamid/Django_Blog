@@ -1,6 +1,9 @@
 {% extends 'blog/base.html' %}
-{% load static %}
+
 {% load mathfilters %}
+{% load jalali_tags %}
+{% load crispy_forms_tags %}
+
 {% block title %}صفحه اصلی {% endblock %}
 
 {% block content %}
@@ -34,6 +37,8 @@
                             {{ category.total_post|mul:100|div:page_obj.paginator.count|floatformat:"0" }}% از پست ها
                         </span>
                         {% endif %}
+                        {% empty %}
+                        پستی وارد نشده است
                         {% endfor %}
                     </div>
                     <!-- /.info-box-content -->
@@ -68,6 +73,8 @@
                             {{ category.total_post|mul:100|div:page_obj.paginator.count|floatformat:"0" }}% از پست ها
                         </span>
                         {% endif %}
+                        {% empty %}
+                        پستی وارد نشده است
                         {% endfor %}
                     </div>
                     <!-- /.info-box-content -->
@@ -100,6 +107,8 @@
                             {{ category.total_post|mul:100|div:page_obj.paginator.count|floatformat:"0" }}% از پست ها
                         </span>
                         {% endif %}
+                        {% empty %}
+                        پستی وارد نشده است
                         {% endfor %}
                     </div>
                     <!-- /.info-box-content -->
@@ -108,7 +117,7 @@
             </div>
         </div>
     </div>
-
+    {% if in_slider_posts %}
     <div class="container mb-3">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -117,7 +126,7 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner">
-                {% for post in in_slider_posts %}
+                {% for post in in_slider_posts|slice:3 %}
                 {% if forloop.first %}
                 <div class="carousel-item active">
                     <img class="d-block w-100" src="{{ post.image.url }}" alt="First slide">
@@ -145,6 +154,7 @@
             </a>
         </div>
     </div>
+    {% endif %}
     <div class="container-fluid">
         <h4>آخرین پست ها</h4>
     </div>
@@ -161,14 +171,23 @@
                         <div class="user-block">
                             <img class="img-circle" src="{{ post.author.profile.image.url }}" alt="User Image">
                             {% if post.author.get_full_name %}
-                            <span class="username"><a href="#">{{ post.author.get_full_name }}</a></span>
+                            <span class="username">
+                                <i class="fa fa-user"></i>
+                                <a href="{% url 'user-post' post.author.username %}">{{ post.author.get_full_name }}</a>
+                            </span>
                             {% else %}
-                            <span class="username"><a href="#}">{{ post.author.username }}</a></span>
+                            <span class="username">
+                                <i class="fa fa-user"></i>
+                                <a href="{% url 'user-post' post.author.username %}">{{ post.author.username }}</a>
+                            </span>
                             {% endif %}
                             {% if post.get_date_posted == 0 %}
                             <span class="description">امروز</span>
                             {% else %}
-                            <span class="description">2 روز پیش</span>
+                            <span class="description">
+                                <i class="fa fa-calendar"></i>
+                                {{ post.date_posted|to_jalali:'%y/%m/%d' }}
+                            </span>
                             {% endif %}
                         </div>
                         <!-- /.user-block -->
@@ -213,12 +232,23 @@
                     {% if user.is_authenticated %}
                     <!-- /.card-footer -->
                     <div class="card-footer">
-                        <form action="#" method="post">
+                        <!-- <form method="post">{% csrf_token %}
                             <img class="img-fluid img-circle img-sm" src="{{ user.profile.image.url }}" alt="Alt Text">
-                            <!-- .img-push is used to add margin to elements next to floating images -->
+
                             <div class="img-push">
-                                <input type="text" class="form-control form-control-sm"
-                                    placeholder="نظری بنویسید و Enter را فشار دهید">
+                                {{ form|crispy }}
+
+                                <button type="submit" class="btn btn-primary">ثبت</button>
+                            </div>
+                        </form> -->
+
+                        <form method="POST" action="{% url 'post-detail' post.id %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                {{ form|crispy }}
+                                <div class="col-sm-2" style="max-width: fit-content;">
+                                    <button type="submit" class="btn btn-block btn-secondary">ارسال</button>
+                                </div>
                             </div>
                         </form>
                     </div>

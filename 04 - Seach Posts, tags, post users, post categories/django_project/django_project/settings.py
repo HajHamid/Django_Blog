@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "taggit",
     "mathfilters",
     "social_django",
+    "jalali_date",
 ]
 
 MIDDLEWARE = [
@@ -86,7 +87,7 @@ DATABASES = {
         "USER": "postgres",
         "PASSWORD": "hg@123456",
         "HOST": "localhost",
-        "PORT": "5435",
+        "PORT": "5432",
     }
 }
 
@@ -107,6 +108,26 @@ AUTHENTICATION_BACKENDS = (
     "social_core.backends.google.GoogleOAuth2",
     "django.contrib.auth.backends.ModelBackend",
 )
+
+# defaults
+JALALI_DATE_DEFAULTS = {
+    "Strftime": {"date": "%y/%m/%d", "datetime": "%H:%M:%S _ %y/%m/%d",},
+    "Static": {
+        "js": [
+            # loading datepicker
+            "admin/js/django_jalali.min.js",
+            # OR
+            # 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.core.js',
+            # 'admin/jquery.ui.datepicker.jalali/scripts/calendar.js',
+            # 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.datepicker-cc.js',
+            # 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.datepicker-cc-fa.js',
+            # 'admin/js/main.js',
+        ],
+        "css": {
+            "all": ["admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css",]
+        },
+    },
+}
 
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
@@ -140,4 +161,3 @@ LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "blog-home"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-

@@ -1,0 +1,92 @@
+{% extends 'blog/base.html' %}
+
+{% block title %} جستجو برای {% if request.GET.q %} {{ request.GET.q }}
+{% elif view.kwargs.username %} {{ view.kwargs.username }}
+{% else %} {{ view.kwargs.tag_name }}
+{% endif %}{% endblock %}
+
+
+{% block header %}
+<div class="card-body" style="text-align: right;">
+    <h5>جستجو برای
+        {% if request.GET.q %} {{ request.GET.q }}
+        {% elif view.kwargs.username %} {{ view.kwargs.username }}
+        {% else %} {{ view.kwargs.tag_name }}
+        {% endif %}</h5>
+    <small>تعداد نتایج : {% if posts.paginator.count %} {{ posts.paginator.count }}
+        {% else %} {{ page_obj.paginator.count }} {% endif %}
+    </small>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- <div class="card-deck"> -->
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-4">
+                <div class="card" style="padding-left: 0; padding-right: 0;">
+                    <div class="card-header text-white bg-{{ post.category.name }}">
+                        {% if post.category.name == 'info' %}
+                        تالیفی
+                        {% elif post.category.name == 'success' %}
+                        ترجمه ای
+                        {% elif post.category.name == 'warning' %}
+                        کاربران
+                        {% endif %}
+                    </div>
+                    <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-text">{{ post.title }}</h5>
+                        <p>{{ post.brief }}</p>
+                        <a href="{% url 'post-detail' post.id %}"
+                            class="btn btn-outline-{{ post.category.name }} float-left">مشاهده
+                            نقد</a>
+                    </div>
+                    <!-- <div class="card-footer text-white bg-{{ post.category.name }}">
+                        <a href="{% url 'post-detail' post.id %}"
+                            class="btn btn-{{ post.category.name }} float-left">مشاهده
+                            نقد</a>
+                    </div> -->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- </div> -->
+        {% if posts.has_other_pages %}
+        {% if posts.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">اولین
+            صفحه</a>
+        <a class="btn btn-outline-info mb-4" href="?page=
+        {{ posts.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">قبلی</a>
+        {% endif %}
+
+        {% for num in posts.paginator.page_range %}
+        {% if posts.number == num %}
+        <a class="btn btn-info mb-4" href="#!">{{ num }}</a>
+        {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+        <a class="btn btn-outline-info mb-4"
+            href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if posts.has_next %}
+        <a class="btn btn-outline-info mb-4"
+            href="?page={{ posts.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">بعدی</a>
+        <a class="btn btn-outline-info mb-4"
+            href="?page={{ posts.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">آخرین
+            صفحه</a>
+        {% endif %}
+
+        {% endif %}
+    </div>
+</section>
+{% endblock content%}

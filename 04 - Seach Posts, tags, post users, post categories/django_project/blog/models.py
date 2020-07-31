@@ -11,7 +11,8 @@ from .utils import get_read_time
 
 
 class Category(models.Model):
-    category = [("info", "تالیفی"), ("success", "ترجمه ای"), ("warning", "کاربران")]
+    category = [("info", "تالیفی"), ("success", "ترجمه ای"),
+                ("warning", "کاربران")]
     name = models.CharField(max_length=20, choices=category, default="info")
 
     def __str__(self):
@@ -24,7 +25,7 @@ class Post(models.Model):
     brief = models.CharField(max_length=300)
     content = models.TextField()
     image = models.ImageField(upload_to="post_pics/")
-    date_posted = models.DateField(default=timezone.now)
+    date_posted = models.DateTimeField(default=timezone.now)
     in_slider = models.BooleanField(default=False)
     read_time = models.TimeField(null=True, blank=True)
     tags = TaggableManager()
@@ -65,7 +66,8 @@ class Like(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(User, unique=False, on_delete=models.CASCADE)
     text = models.TextField()
     date_created = models.DateTimeField(default=timezone.now)

@@ -10,6 +10,8 @@ class CommentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
         self.fields["text"].label = False
-        # self.fields["text"].widget.attrs["class"] = "form-control"
-        self.fields["text"].widget.attrs["placeholder"] = "Leave a comment"
+        self.fields["text"].widget.attrs[
+            "placeholder"
+        ] = "نظری بنویسید و Enter را فشار دهید"
 
+        self.fields["text"].widget.attrs["rows"] = "1"

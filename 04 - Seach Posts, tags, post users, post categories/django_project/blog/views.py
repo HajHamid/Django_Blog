@@ -6,9 +6,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DeleteView, ListView
-
+from django.db.models import Count, Q
 from .forms import CommentForm
 from .models import Category, Comment, Like, Post, Read
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from taggit.models import Tag
 
 
 class PostListView(ListView):
@@ -24,6 +26,7 @@ class PostListView(ListView):
             "-date_posted"
         )
         context["categories"] = Category.objects.annotate(total_post=Count("post"))
+        context["form"] = CommentForm()
         return context
 
 
@@ -81,3 +84,52 @@ class CommentDeleteView(DeleteView):
     def get_success_url(self):
         post = self.object.post
         return reverse_lazy("post-detail", kwargs={"pk": post.id})
+
+
+def search_post(request):
+    post_list = Post.objects.all()
+    query = request.GET.get("q")
+    if query:
+        post_list = Post.objects.filter(
+            Q(title__icontains=query)
+            | Q(content__icontains=query)
+            | Q(author__first_name__icontains=query)
+            | Q(author__last_name__icontains=query)
+        ).distinct()
+
+    paginator = Paginator(post_list, 4)
+    page = request.GET.get("page")
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {"posts": posts}
+
+    return render(request, "blog/search_post.html", context)
+
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = "blog/search_post.html"
+    context_object_name = "posts"
+    paginate_by = 10
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get("username"))
+        return Post.objects.filter(author=user).order_by("-date_posted")
+
+
+class TagPostListView(ListView):
+    model = Post
+    template_name = "blog/search_post.html"
+    context_object_name = "posts"
+    paginate_by = 10
+
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, name=self.kwargs.get("tag_name"))
+        posts = Post.objects.filter(tags=tag)
+        return posts

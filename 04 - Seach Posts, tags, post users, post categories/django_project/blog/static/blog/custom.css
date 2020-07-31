@@ -65,10 +65,6 @@ body:not(.sidebar-mini-md) .content-wrapper, body:not(.sidebar-mini-md) .main-fo
     text-align: right;
 }
 
-.form-control:not(:last-child) {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
 
 .input-group > .input-group-append > .btn{
     border-top-right-radius: 0;
@@ -252,8 +248,8 @@ blockquote{
     margin-left: 0;
 }
 
-textarea.form-control {
-    height: 45px;
+textarea.form-control::placeholder {
+    font-size: 12px;
 }
 
 .modal.show .modal-dialog {
@@ -326,4 +322,17 @@ font-size: 1.2rem;
 
 .carousel-caption {
     direction: rtl;
+}
+
+.card-img-top {
+    border-top-left-radius: calc(.25rem - 0);
+    border-top-right-radius: calc(.25rem - 0);
+}
+
+.user-block .description {
+    font-size: 16px;
+}
+
+.fa{
+    font-weight: unset;
 }
